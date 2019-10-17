@@ -33,21 +33,24 @@
             <div class = "p-3 mb-2 bg-warning text-dark">
                 <div class = "col-md-6">
                     <p>Target Score</p>
+                    <div id = "number-to-guess"></div>
             </div>
         </div>
             <div class = "p-3 mb-2 bg-info text-white">
                 <div class = "col-md-6">
                     <p>Wins: </p>
+                    <div id = "win-counter"></div>
                     <p>Losses: </p>
+                    <div id = "loss-counter"></div>
                 </div>
             </div>
         </div>
         <div class = "row">
             <div class = "col-md-12">
-                <img src = "images/51561341_1_x.jpg">
-                <img src = "images/amethyst.jpg">
-                <img src = "images/round-chatham-lab-grown-blue-s.png">
-                <img src = "images/ruby-stone-500x500.jpg">
+                <div id = "crystal1"></div>
+                <div id = "crystal2"></div>
+                <div id = "crystal3"></div>
+                <div id = "crystal4"></div>
             </div>
         </div>
         <div class = "row">
@@ -60,7 +63,7 @@
         <div class = "row">
             <div class  = "p-3 mb-2 bg-success text-white">
                 <div class = "col-md-12">
-                    <p>0</p>
+                        <div id = "current-score"></div>
                 </div>
             </div>
         </div>
@@ -74,21 +77,49 @@
 
     var counter = 0;
 
+    $("current-score").text(counter);
 
     var numberOptions = [10, 5, 3, 7];
 
-    for (var i = 0; i < numberOptions.length; i++) {
+    var wins = 0;
 
-     var imageCrystal = $("<img>");
+    $("win-counter").text(wins);
 
-     imageCrystal.addClass("crystal-image");
+    var losses = 0;
 
-     imageCrystal.attr("src", "images/51561341_1_x.jpg");
+    $("loss-counter").text(losses);
 
-     imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+    for (var i = 0; i <= numberOptions.length; i++) {
 
-     $("#crystals").append(imageCrystal);
+     var imageCrystal1 = $("<img>");
+
+     imageCrystal1.addClass("crystal-image");
+     imageCrystal1.attr("src", "images/51561341_1_x.jpg");
+     imageCrystal1.attr("data-crystalvalue", numberOptions[0]);
+     $("#crystal1").append(imageCrystal1);
+
+     var imageCrystal2 = $("<img>");
+
+    imageCrystal2.addClass("crystal-image");
+    imageCrystal2.attr("src", "images/amethyst.jpg");
+    imageCrystal2.attr("data-crystalvalue", numberOptions[1]);
+    $("#crystal2").append(imageCrystal2);
+
+    var imageCrystal3 = $("<img>");
+
+    imageCrystal3.addClass("crystal-image");
+    imageCrystal3.attr("src", "images/round-chatham-lab-grown-blue-s.png");
+    imageCrystal3.attr("data-crystalvalue", numberOptions[2]);
+    $("#crystal3").append(imageCrystal3);
+
+    var imageCrystal4 = $("<img>");
+
+    imageCrystal4.addClass("crystal-image");
+    imageCrystal4.attr("src", "images/ruby-stone-500x500.jpg");
+    imageCrystal4.attr("data-crystalvalue", numberOptions[3]);
+    $("#crystal4").append(imageCrystal4);
     }
+
 
     $(".crystal-image").on("click", function() {
 
@@ -97,11 +128,13 @@
     counter += crystalValue;
 
     alert("New score: " + counter);
-
+    
     if (counter === targetNumber) {
         alert("You win!");
+        wins++;
      } else if (counter >= targetNumber) {
         alert("You lose!!");
+        losses++;
      }
 
     });
