@@ -25,7 +25,7 @@
                     <p>Presented below are four crystal that carry 4 different values. These values are added to the total number of points on the score counter.</p>
                     <p>You win the game if the total value equals to the designated target goal.</p>
                     <p>The value of each crystal is hidden until it is clicked upon by the user.</p>
-                    <p>The value of each crystal and the target score is randomized each round.</p>
+                    <p>The value of the target score is randomized each round.</p>
                 </div>
             </div>
         </div>
@@ -47,10 +47,15 @@
         </div>
         <div class = "row">
             <div class = "col-md-12">
-                <div id = "crystal1"></div>
-                <div id = "crystal2"></div>
-                <div id = "crystal3"></div>
-                <div id = "crystal4"></div>
+                <div id="crystal1"></div>
+                <div id="crystal2"></div>
+                <div id="crystal3"></div>
+                <div id="crystal4"></div>
+
+                <!-- <div id="crystal1" class="crystal-image"></div>
+                <div id="crystal2" class="crystal-image"></div>
+                <div id="crystal3" class="crystal-image"></div>
+                <div id="crystal4" class="crystal-image"></div> -->
             </div>
         </div>
         <div class = "row">
@@ -63,81 +68,95 @@
         <div class = "row">
             <div class  = "p-3 mb-2 bg-success text-white">
                 <div class = "col-md-12">
-                        <div id = "current-score"></div>
+                        <div id="current-score"></div>
                 </div>
             </div>
         </div>
     </div>
     </div>
+
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-    var targetNumber = 53;
-
-    $("#number-to-guess").text(targetNumber);
-
-    var counter = 0;
-
-    $("current-score").text(counter);
-
-    var numberOptions = [10, 5, 3, 7];
-
-    var wins = 0;
-
-    $("win-counter").text(wins);
-
-    var losses = 0;
-
-    $("loss-counter").text(losses);
-
-    for (var i = 0; i <= numberOptions.length; i++) {
-
-     var imageCrystal1 = $("<img>");
-
-     imageCrystal1.addClass("crystal-image");
-     imageCrystal1.attr("src", "images/51561341_1_x.jpg");
-     imageCrystal1.attr("data-crystalvalue", numberOptions[0]);
-     $("#crystal1").append(imageCrystal1);
-
-     var imageCrystal2 = $("<img>");
-
-    imageCrystal2.addClass("crystal-image");
-    imageCrystal2.attr("src", "images/amethyst.jpg");
-    imageCrystal2.attr("data-crystalvalue", numberOptions[1]);
-    $("#crystal2").append(imageCrystal2);
-
-    var imageCrystal3 = $("<img>");
-
-    imageCrystal3.addClass("crystal-image");
-    imageCrystal3.attr("src", "images/round-chatham-lab-grown-blue-s.png");
-    imageCrystal3.attr("data-crystalvalue", numberOptions[2]);
-    $("#crystal3").append(imageCrystal3);
-
-    var imageCrystal4 = $("<img>");
-
-    imageCrystal4.addClass("crystal-image");
-    imageCrystal4.attr("src", "images/ruby-stone-500x500.jpg");
-    imageCrystal4.attr("data-crystalvalue", numberOptions[3]);
-    $("#crystal4").append(imageCrystal4);
-    }
+        
+        // Paramter variables for game  
+        var targetNumber = Math.floor(Math.random() * 201);
+        var counter = 0;
+        var numberOptions = [10, 8, 5, 13];
+        var wins = 0;
+        var losses = 0;
+        // HTML Elements 
+        var scoreDisplay = $("#current-score");
+        var winDisplay = $("#win-counter");
+        var lossDisplay = $("#loss-counter");
+        var targetDisplay = $("#number-to-guess");
+        var imageCrystal1 = $("<img>");
+        var imageCrystal2 = $("<img>");
+        var imageCrystal3 = $("<img>");
+        var imageCrystal4 = $("<img>");
 
 
-    $(".crystal-image").on("click", function() {
 
-    var crystalValue = ($(this).attr("data-crystalvalue"));
-    crystalValue = parseInt(crystalValue);
-    counter += crystalValue;
+        $("#number-to-guess").text(targetNumber);
 
-    alert("New score: " + counter);
-    
-    if (counter === targetNumber) {
-        alert("You win!");
-        wins++;
-     } else if (counter >= targetNumber) {
-        alert("You lose!!");
-        losses++;
-     }
+        $("current-score").text(counter);
 
-    });
+        $("win-counter").text(wins);
+
+
+        $("loss-counter").text(losses);
+
+        for (var i = 0; i <= numberOptions.length; i++) {
+
+            imageCrystal1.addClass("crystal-image");
+            imageCrystal1.attr("src", "images/51561341_1_x.jpg");
+            imageCrystal1.attr("data-crystalvalue", numberOptions[0]);
+            $("#crystal1").append(imageCrystal1);
+
+
+            imageCrystal2.addClass("crystal-image");
+            imageCrystal2.attr("src", "images/amethyst.jpg");
+            imageCrystal2.attr("data-crystalvalue", numberOptions[1]);
+            $("#crystal2").append(imageCrystal2);
+
+
+            imageCrystal3.addClass("crystal-image");
+            imageCrystal3.attr("src", "images/round-chatham-lab-grown-blue-s.png");
+            imageCrystal3.attr("data-crystalvalue", numberOptions[2]);
+            $("#crystal3").append(imageCrystal3);
+
+
+            imageCrystal4.addClass("crystal-image");
+            imageCrystal4.attr("src", "images/ruby-stone-500x500.jpg");
+            imageCrystal4.attr("data-crystalvalue", numberOptions[3]);
+            $("#crystal4").append(imageCrystal4);
+        }
+
+
+        $(".crystal-image").on("click", function() {
+
+        var crystalValue = ($(this).attr("data-crystalvalue"));
+        crystalValue = parseInt(crystalValue);
+        counter += crystalValue;
+        scoreDisplay.text(counter);
+        winDisplay.text(wins);
+        lossDisplay.text(losses);
+        
+        if (counter === targetNumber) {
+            alert("You win. Yay.");
+            winDisplay.text(wins++);
+            targetDisplay.text(targetNumber = Math.floor(Math.random() * 201));
+            counter = 0;
+            scoreDisplay.text(counter);
+        } else if (counter >= targetNumber) {
+            alert("YOU LOSE!!! GOOD SAY SIR!");
+            lossDisplay.text(losses++);
+            targetDisplay.text(targetNumber = Math.floor(Math.random() * 201));
+            counter = 0;
+            scoreDisplay.text(counter);
+        }
+
+        });
     </script>
 </body>
 </html>
